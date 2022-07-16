@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Speach To Text</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            h1{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #output{
+                display: block;
+                width: 80%;
+                height: 300px;
+                margin: 30px auto;
+                font-weight: 300 1rem Archivo;
+                font-size: 20pt;
+                border: none;
+
+                padding: 10px 10px;
+            }
+          
+            .container-button{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+
+            .btn-end{
+                margin-left: 40px;
+                background-color:gray;
+            }
+
+            .btn-start{
+                background-color:lightskyblue;
+            }
+
+            .btn-start, .btn-end{
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                width:  8rem;
+                height: 2rem;
+
+                border-radius: 0.8rem;
+                margin-right: 0;
+                padding: 10px;
+
+                border: none;
+                font-weight: 200 1rem Archivo;
+                font-size: 16pt;
+
+            }
+            #action
+            {
+                color: blue;             
+                font-size: 16pt;
+
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>Speach To Text</h1>
+       
+        <div class="container-button">
+          <!-- A button to start record speach  -->
+            <button type="button" class="btn-start"  onclick="start();">Start</button> 
+            <!-- A button to Stop record speach  -->
+            <button type="button" class="btn-end"  onclick="stop();">Stop</button> 
+
+        </div>
+        <!-- A span to print alert message to user   -->
+        <div class="container-button">  <p> &nbsp; <span id="action"></span></p> </div>
+        
+        <!-- A textarea to print the recognisation text  -->
+        <textarea  id="output" dir="rtl"></textarea>
+
+        <script>
+            /* JS comes here */
+          
+            // get output div reference
+            var output = document.getElementById("output");
+           
+            // get action element reference
+            var action = document.getElementById("action");
+
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || window.webkitSpeechRecognition;
+             
+            var recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            // This runs when the speech recognition service starts
+            recognition.onstart = function () {
+                action.innerHTML = "<small>يتم الان الاستماع تكلم؟...</small>";
+            };
+            // This runs when the speech recognition no match
+            recognition.onnomatch = function (event) {
+
+                action.innerHTML = "<small>المعذرة لم نستطع فهم كلامك.</small>";
+            };
+             // This runs when the speech recognition get error as connection faild
+            recognition.onerror = function (event) {
+                action.innerHTML = "<small>حدث خطا يرجى التاكد من اتصال الانترنت:" + event.error + ".</small>";
+
+            };
+            // This runs when the speech recognition service returns result
+            recognition.onresult = function (event) {
+                var transcript = event.results[0][0].transcript;
+                output.innerHTML = transcript;
+            };
+
+            // start recognition
+            function start() {
+                recognition.start();
+            }
+             // stop recognition
+            function stop() {
+                recognition.stop();
+            }
+            
+        </script>
+    </body>
+
+</html>
