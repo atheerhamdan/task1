@@ -1,5 +1,5 @@
 # task1
-A site that converts audio to text and supports the Arabic language
+web server speech to text and supports the Arabic language
 And arduino ESP32 segment operation algorithm
 
 ## Steps to run the ESP32 segment on the Arduino:
